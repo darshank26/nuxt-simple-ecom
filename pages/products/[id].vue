@@ -1,11 +1,10 @@
 <template>
     <div>
-        <h2>  {{  products.title  }}</h2>
-        <p>  {{ products.id  }}    </p>
-        <p> $ {{ products.price  }}    </p>
-        <p> {{ products.description  }}    </p>
-
-      
+        <Head>
+            <Title>Nuxt Simple Ecom | {{ products.title }}</Title>
+            <Meta name="description" :content="products.description"/>
+        </Head>
+      <ProductDeatail :products="products"/>
     </div>
 </template>
 
@@ -18,6 +17,10 @@ const uri = "https://fakestoreapi.com/products/" + id
 
 const {data : products } = await useFetch(uri)
 
+if(!products.value)
+{
+    throw createError({statusCode: 404, statusMessage : "Page Not Found"})
+}
 definePageMeta({
     layout : 'products'
 })
